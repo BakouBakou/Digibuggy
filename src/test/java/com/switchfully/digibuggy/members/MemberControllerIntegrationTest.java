@@ -14,13 +14,13 @@ import static io.restassured.http.ContentType.JSON;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class MemberControllerIntegrationTest<port> {
+class MemberControllerIntegrationTest {
 
     @LocalServerPort
-     private int port;
+    private int port;
 
     @Test
-    void GivenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
+    void givenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
         RegisterMemberDto registerMemberDto = new RegisterMemberDto()
                 .setInss("9876543216541")
                 .setEmailAddress("bugs@bunny.com")
@@ -34,17 +34,17 @@ class MemberControllerIntegrationTest<port> {
         MemberDto memberDto =
                 RestAssured
                         .given()
-                            .body(registerMemberDto)
-                            .accept(JSON)
-                            .contentType(JSON)
+                        .body(registerMemberDto)
+                        .accept(JSON)
+                        .contentType(JSON)
                         .when()
-                            .port(port)
-                            .post("/members")
+                        .port(port)
+                        .post("/members")
                         .then()
-                            .assertThat()
-                            .statusCode(HttpStatus.CREATED.value())
-                            .extract()
-                            .as(MemberDto.class);
+                        .assertThat()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .as(MemberDto.class);
 
         Assertions.assertThat(memberDto.getId()).isNotBlank().isNotEmpty().isNotNull();
         Assertions.assertThat(memberDto.getInss()).isEqualTo(registerMemberDto.getInss());
