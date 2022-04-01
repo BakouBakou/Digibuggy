@@ -8,18 +8,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/members")
 public class MemberController {
 
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public MemberDto registerMember(@RequestBody RegisterMemberDto registerMemberDto) {
-        return new MemberDto()
-                .setINSS(registerMemberDto.getINSS())
-                .setEmailAddress(registerMemberDto.getEmailAddress())
-                .setFirstName(registerMemberDto.getFirstName())
-                .setLastName(registerMemberDto.getLastName())
-                .setStreetName(registerMemberDto.getStreetName())
-                .setStreetNumber(registerMemberDto.getStreetNumber())
-                .setCityName(registerMemberDto.getCityName())
-                .setPostalCode(registerMemberDto.getPostalCode());
+        return memberService.registerMember(registerMemberDto);
     }
 
 
