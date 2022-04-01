@@ -20,7 +20,16 @@ public class BookController {
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<BookDto> getAllBooks() {
-        return new ArrayList<>();
+        List<Book> booksToReturn = new ArrayList<>(List.of(
+                new Book("1", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla"),
+                new Book("2", "The prisoner of Azkabon", "J.K.", "Rowling", "blablabla"),
+                new Book("3", "The prisoner of Azkabin", "J.K.", "Rowling", "blablabla")
+        ));
+
+        BookMapper mapper = new BookMapper();
+        List<BookDto> bookDtoToReturn = new ArrayList<>();
+        booksToReturn.forEach(book -> bookDtoToReturn.add(mapper.bookToDto(book)));
+        return bookDtoToReturn;
     }
 
     @GetMapping(path = "/{isbn}", produces = "application/json")
