@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 public class BookRepository {
     public void save(Book thePrisonerOfAzkaban) {
     }
+
+    public Book getBookByIsbn(String isbn) {
+        return bookDatabase.getBookByIsbn(isbn);
+    }
 }
