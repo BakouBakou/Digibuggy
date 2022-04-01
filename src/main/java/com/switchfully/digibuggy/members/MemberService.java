@@ -4,18 +4,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MemberService {
+
+    private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
+
+    public MemberService(MemberRepository memberRepository, MemberMapper memberMapper) {
+        this.memberRepository = memberRepository;
+        this.memberMapper = memberMapper;
+    }
+
     public MemberDto registerMember(RegisterMemberDto registerMemberDto) {
 
+        Member memberToRegister = memberMapper.toMember(registerMemberDto);
+        Member registeredMember = memberRepository.registerMember(memberToRegister);
 
-
-        return new MemberDto()
-                .setINSS(registerMemberDto.getINSS())
-                .setEmailAddress(registerMemberDto.getEmailAddress())
-                .setFirstName(registerMemberDto.getFirstName())
-                .setLastName(registerMemberDto.getLastName())
-                .setStreetName(registerMemberDto.getStreetName())
-                .setStreetNumber(registerMemberDto.getStreetNumber())
-                .setCityName(registerMemberDto.getCityName())
-                .setPostalCode(registerMemberDto.getPostalCode());
+        return memberMapper.toDto(registeredMember);
     }
 }

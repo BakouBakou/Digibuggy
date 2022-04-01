@@ -2,7 +2,7 @@ package com.switchfully.digibuggy.members;
 
 
 public class RegisterMemberDto {
-    private String INSS;
+    private String inss;
     private String emailAddress;
     private String firstName;
     private String lastName;
@@ -12,8 +12,8 @@ public class RegisterMemberDto {
     private String cityName;
 
 
-    public RegisterMemberDto setINSS(String INSS) {
-        this.INSS = INSS;
+    public RegisterMemberDto setInss(String inss) {
+        this.inss = inss;
         return this;
     }
 
@@ -53,8 +53,8 @@ public class RegisterMemberDto {
     }
 
 
-    public String getINSS() {
-        return INSS;
+    public String getInss() {
+        return inss;
     }
 
     public String getEmailAddress() {

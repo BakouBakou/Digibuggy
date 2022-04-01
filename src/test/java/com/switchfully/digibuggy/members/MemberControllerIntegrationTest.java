@@ -20,7 +20,7 @@ class MemberControllerIntegrationTest<port> {
     @Test
     void GivenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
         RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setINSS("9876543216541")
+                .setInss("9876543216541")
                 .setEmailAddress("bugs@bunny.com")
                 .setFirstName("bugs")
                 .setLastName("bunny")
@@ -45,7 +45,7 @@ class MemberControllerIntegrationTest<port> {
                             .as(MemberDto.class);
 
         Assertions.assertThat(memberDto.getId()).isNotBlank().isNotEmpty().isNotNull();
-        Assertions.assertThat(memberDto.getINSS()).isEqualTo(registerMemberDto.getINSS());
+        Assertions.assertThat(memberDto.getInss()).isEqualTo(registerMemberDto.getInss());
         Assertions.assertThat(memberDto.getEmailAddress()).isEqualTo(registerMemberDto.getEmailAddress());
         Assertions.assertThat(memberDto.getFirstName()).isEqualTo(registerMemberDto.getFirstName());
         Assertions.assertThat(memberDto.getLastName()).isEqualTo(registerMemberDto.getLastName());

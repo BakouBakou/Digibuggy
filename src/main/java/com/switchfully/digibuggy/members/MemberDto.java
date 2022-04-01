@@ -1,8 +1,8 @@
 package com.switchfully.digibuggy.members;
 
 public class MemberDto {
-    private String id = "152515";
-    private String INSS;
+    private String id;
+    private String inss;
     private String emailAddress;
     private String firstName;
     private String lastName;
@@ -15,8 +15,8 @@ public class MemberDto {
         return id;
     }
 
-    public String getINSS() {
-        return INSS;
+    public String getInss() {
+        return inss;
     }
 
     public String getEmailAddress() {
@@ -47,8 +47,13 @@ public class MemberDto {
         return cityName;
     }
 
-    public MemberDto setINSS(String INSS) {
-        this.INSS = INSS;
+    public MemberDto setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public MemberDto setInss(String inss) {
+        this.inss = inss;
         return this;
     }
 
