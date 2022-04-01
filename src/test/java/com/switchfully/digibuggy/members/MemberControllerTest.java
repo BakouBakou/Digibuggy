@@ -8,10 +8,5 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class MemberControllerTest {
 
-    @LocalServerPort
 
-
-    //GIVEN
-    //WHEN
-    //THEN
 }
