@@ -58,5 +58,30 @@ public class RegisterMemberDto {
     }
 
     public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 }

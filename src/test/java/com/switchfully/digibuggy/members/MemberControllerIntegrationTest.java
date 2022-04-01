@@ -5,18 +5,21 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
+
+import static io.restassured.http.ContentType.JSON;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class MemberControllerTest<port> {
+class MemberControllerIntegrationTest<port> {
 
     @LocalServerPort
      private int port;
 
     @Test
     void GivenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
-        RegisterMemberDto newMember = new RegisterMemberDto()
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
                 .setINSS("9876543216541")
                 .setEmailAddress("bugs@bunny.com")
                 .setFirstName("bugs")
@@ -29,7 +32,7 @@ class MemberControllerTest<port> {
         MemberDto memberDto =
                 RestAssured
                         .given()
-                            .body(newMember)
+                            .body(registerMemberDto)
                             .accept(JSON)
                             .contentType(JSON)
                         .when()
@@ -42,14 +45,14 @@ class MemberControllerTest<port> {
                             .as(MemberDto.class);
 
         Assertions.assertThat(memberDto.getId()).isNotBlank().isNotEmpty().isNotNull();
-        Assertions.assertThat(memberDto.getINSS()).isEqualTo(newMember.getINSS());
-        Assertions.assertThat(memberDto.getEmailAddress()).isEqualTo(newMember.getEmailAddress());
-        Assertions.assertThat(memberDto.getFirstName()).isEqualTo(newMember.getFirstName());
-        Assertions.assertThat(memberDto.getLastName()).isEqualTo(newMember.getLastName());
-        Assertions.assertThat(memberDto.getStreetName()).isEqualTo(newMember.getStreetName());
-        Assertions.assertThat(memberDto.getStreetNumber()).isEqualTo(newMember.getStreetNumber());
-        Assertions.assertThat(memberDto.getPostalCode()).isEqualTo(newMember.getPostalCode());
-        Assertions.assertThat(memberDto.getCityName()).isEqualTo(newMember.getCityName());
+        Assertions.assertThat(memberDto.getINSS()).isEqualTo(registerMemberDto.getINSS());
+        Assertions.assertThat(memberDto.getEmailAddress()).isEqualTo(registerMemberDto.getEmailAddress());
+        Assertions.assertThat(memberDto.getFirstName()).isEqualTo(registerMemberDto.getFirstName());
+        Assertions.assertThat(memberDto.getLastName()).isEqualTo(registerMemberDto.getLastName());
+        Assertions.assertThat(memberDto.getStreetName()).isEqualTo(registerMemberDto.getStreetName());
+        Assertions.assertThat(memberDto.getStreetNumber()).isEqualTo(registerMemberDto.getStreetNumber());
+        Assertions.assertThat(memberDto.getPostalCode()).isEqualTo(registerMemberDto.getPostalCode());
+        Assertions.assertThat(memberDto.getCityName()).isEqualTo(registerMemberDto.getCityName());
 
     }
 }
