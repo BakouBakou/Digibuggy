@@ -1,5 +1,7 @@
 package com.switchfully.digibuggy.members;
 
+import com.switchfully.digibuggy.members.dtos.MemberDto;
+import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +16,10 @@ public class MemberService {
     }
 
     public MemberDto registerMember(RegisterMemberDto registerMemberDto) {
+
+        if (registerMemberDto.getInss() == null) {
+            throw new IllegalArgumentException();
+        }
 
         Member memberToRegister = memberMapper.toMember(registerMemberDto);
         Member registeredMember = memberRepository.registerMember(memberToRegister);

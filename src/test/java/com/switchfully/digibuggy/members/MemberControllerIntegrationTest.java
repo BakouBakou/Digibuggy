@@ -1,5 +1,7 @@
 package com.switchfully.digibuggy.members;
 
+import com.switchfully.digibuggy.members.dtos.MemberDto;
+import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
