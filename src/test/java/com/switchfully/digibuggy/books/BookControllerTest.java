@@ -33,7 +33,6 @@ class BookControllerTest {
         BookMapper mapper = new BookMapper();
         BookDto expectedResult = mapper.bookToDto(thePrisonerOfAzkaban);
 
-
         BookDto result = RestAssured
                 .given()
                     .accept(JSON)
