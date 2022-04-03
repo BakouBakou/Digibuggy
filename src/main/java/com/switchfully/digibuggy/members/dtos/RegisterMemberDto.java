@@ -1,8 +1,8 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.members.dtos;
 
 
 public class RegisterMemberDto {
-    private String INSS;
+    private String inss;
     private String emailAddress;
     private String firstName;
     private String lastName;
@@ -12,8 +12,8 @@ public class RegisterMemberDto {
     private String cityName;
 
 
-    public RegisterMemberDto setINSS(String INSS) {
-        this.INSS = INSS;
+    public RegisterMemberDto setInss(String inss) {
+        this.inss = inss;
         return this;
     }
 
@@ -53,10 +53,35 @@ public class RegisterMemberDto {
     }
 
 
-    public String getINSS() {
-        return INSS;
+    public String getInss() {
+        return inss;
     }
 
     public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 }
