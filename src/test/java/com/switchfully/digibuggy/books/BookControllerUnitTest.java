@@ -21,7 +21,7 @@ public class BookControllerUnitTest {
     BookRepository bookRepository;
 
     @Test
-    void WhenISBNDoesNotExistsInDatabase_BadRequestIsThrown() {
+    void givenISBN_WhenISBNDoesNotExistsInDatabase_ThenBadRequestIsThrown() {
         //GIVEN
         String isbnNotInDB = "9876543219874";
 
