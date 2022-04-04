@@ -2,6 +2,9 @@ package com.switchfully.digibuggy.members;
 
 import com.switchfully.digibuggy.members.dtos.MemberDto;
 import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
+import com.switchfully.digibuggy.members.exceptions.EmailNotProvidedException;
+import com.switchfully.digibuggy.members.exceptions.INSSAlreadyExistsException;
+import com.switchfully.digibuggy.members.exceptions.INSSNotProvidedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

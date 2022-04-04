@@ -21,15 +21,14 @@ class MemberControllerIntegrationTest {
 
     @Test
     void givenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("9876543216541")
-                .setEmailAddress("bugs@bunny.com")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "12345678",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         MemberDto memberDto =
                 RestAssured

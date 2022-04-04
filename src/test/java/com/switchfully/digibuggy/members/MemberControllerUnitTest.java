@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.members;
 
 import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,16 +23,18 @@ class MemberControllerUnitTest {
     private MemberRepository memberRepository;
 
 
+
+
     @Test
     void givenANewMemberWhenINSSIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setEmailAddress("bugs@bunny.com")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( null,
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
                 RestAssured
                         .given()
@@ -49,15 +52,14 @@ class MemberControllerUnitTest {
 
     @Test
     void givenANewMemberWhenINSSIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("")
-                .setEmailAddress("bugs@bunny.com")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         RestAssured
                 .given()
@@ -74,15 +76,14 @@ class MemberControllerUnitTest {
 
     @Test
     void givenANewMemberWhenINSSIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("     ")
-                .setEmailAddress("bugs@bunny.com")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "    ",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         RestAssured
                 .given()
@@ -101,15 +102,14 @@ class MemberControllerUnitTest {
     void givenANewMemberWhenINSSAlreadyExistsBadRequestIsThrown() {
         //GIVEN
         String alreadyExistingINSS = "44654564";
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss(alreadyExistingINSS)
-                .setEmailAddress("bugs@bunny.com")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( alreadyExistingINSS,
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         memberRepository.registerMember(new Member(
                 alreadyExistingINSS,
@@ -139,14 +139,14 @@ class MemberControllerUnitTest {
 
     @Test
     void givenANewMemberWhenEmailIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("Bugs")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "bugs",
+                null,
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         RestAssured
                 .given()
@@ -163,15 +163,14 @@ class MemberControllerUnitTest {
 
     @Test
     void givenANewMemberWhenEmailIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("Bugs")
-                .setEmailAddress("")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         RestAssured
                 .given()
@@ -188,15 +187,134 @@ class MemberControllerUnitTest {
 
     @Test
     void givenANewMemberWhenEmailIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
-                .setInss("Bugs")
-                .setEmailAddress("         ")
-                .setFirstName("bugs")
-                .setLastName("bunny")
-                .setStreetName("Looney tunes street")
-                .setStreetNumber("1")
-                .setPostalCode("1000")
-                .setCityName("Looney tunes city");
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "        ",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsCorrectMemberIsCreated() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoAtNoDotBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsfdgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoAtBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsf.dgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoDotBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsf@dgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongDotBeforeAtBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gf.sf@dgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
 
         RestAssured
                 .given()
