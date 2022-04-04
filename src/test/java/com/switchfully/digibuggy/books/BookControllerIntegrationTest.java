@@ -1,8 +1,8 @@
 package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
+import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static io.restassured.http.ContentType.JSON;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class BookControllerTest {
+class BookControllerIntegrationTest {
     @LocalServerPort
     private int port;
 
@@ -31,7 +31,7 @@ class BookControllerTest {
         bookRepository.save(thePrisonerOfAzkaban);
 
         BookMapper mapper = new BookMapper();
-        BookDto expectedResult = mapper.bookToDto(thePrisonerOfAzkaban);
+        BookDto expectedResult = mapper.BookToDto(thePrisonerOfAzkaban);
 
         BookDto result = RestAssured
                 .given()
@@ -63,11 +63,11 @@ class BookControllerTest {
 
         BookMapper mapper = new BookMapper();
 
-        List<BookDto> expectedDtoList = new ArrayList<>();
+        List<BookOverviewDto> expectedDtoList = new ArrayList<>();
 
-        bookList.forEach(book -> expectedDtoList.add(mapper.bookToDto(book)));
+        bookList.forEach(book -> expectedDtoList.add(mapper.bookOverviewToDto(book)));
 
-        BookDto[] result = RestAssured
+        BookOverviewDto[] result = RestAssured
                 .given()
                 .accept(JSON)
                 .when()
@@ -77,7 +77,7 @@ class BookControllerTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
-                .as(BookDto[].class);
+                .as(BookOverviewDto[].class);
 
         Assertions.assertThat(result).hasSameElementsAs(expectedDtoList);
 

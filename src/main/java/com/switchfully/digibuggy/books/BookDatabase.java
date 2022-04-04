@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class BookDatabase {
 
-    private ConcurrentHashMap<String, Book> bookDatabase= new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Book> bookDatabase= new ConcurrentHashMap<>();
 
     public BookDatabase() {
         bookDatabase.put("1234567891234", new Book("1234567891234", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla"));

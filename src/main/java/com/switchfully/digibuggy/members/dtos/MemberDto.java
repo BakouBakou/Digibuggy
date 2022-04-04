@@ -114,5 +114,4 @@ public class MemberDto {
 //        return this;
 //    }
 
-
 }
