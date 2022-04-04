@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
+import com.switchfully.digibuggy.books.exceptions.ISBNNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

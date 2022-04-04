@@ -20,7 +20,8 @@ class MemberControllerIntegrationTest {
 
     @Test
     void givenANewMember_WhenYouRegisterAMember_ThenTheMemberIsAddedInTheDatabaseClass() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "12345678",
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto(
+                "12345678",
                 "bugs@bunny.com",
                 "bugs",
                 "bunny",
