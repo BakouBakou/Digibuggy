@@ -5,6 +5,7 @@ import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import com.switchfully.digibuggy.members.exceptions.EmailNotProvidedException;
 import com.switchfully.digibuggy.members.exceptions.INSSAlreadyExistsException;
 import com.switchfully.digibuggy.members.exceptions.INSSNotProvidedException;
+import com.switchfully.digibuggy.members.exceptions.WrongEmailFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
