@@ -40,6 +40,11 @@ public class MemberService {
             throw new EmailNotProvidedException();
         }
 
+        if (!registerMemberDto.getEmailAddress().matches("^(\\S+)@(\\S+)\\.(\\S+)$")) {
+            logger.error(new WrongEmailFormatException().getMessage());
+            throw new WrongEmailFormatException();
+        }
+
         Member memberToRegister = memberMapper.toMember(registerMemberDto);
         Member registeredMember = memberRepository.registerMember(memberToRegister);
 

@@ -230,7 +230,7 @@ class MemberControllerUnitTest {
                 .post("/members")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test
