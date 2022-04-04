@@ -2,6 +2,8 @@ package com.switchfully.digibuggy.books;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public class BookRepository {
 
@@ -19,6 +21,7 @@ public class BookRepository {
         return bookDatabase.getBookByIsbn(isbn);
     }
 
-//    public Book getAllBooks() {
-//    }
+    public Map<String, Book> getAllBooks() {
+        return bookDatabase.getAllBooks();
+    }
 }
