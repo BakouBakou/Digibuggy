@@ -25,6 +25,8 @@ public class MemberService {
 
     public MemberDto registerMember(RegisterMemberDto registerMemberDto) {
 
+        logger.info("Registering a new member");
+
         if (registerMemberDto.getInss() == null || registerMemberDto.getInss().isEmpty() || registerMemberDto.getInss().isBlank()) {
             logger.error(new INSSNotProvidedException().getMessage());
             throw new INSSNotProvidedException();
@@ -45,9 +47,21 @@ public class MemberService {
             throw new WrongEmailFormatException();
         }
 
+        if (registerMemberDto.getLastName() == null || registerMemberDto.getLastName().isEmpty() || registerMemberDto.getLastName().isBlank()) {
+            logger.error(new LastNameNotProvidedException().getMessage());
+            throw new LastNameNotProvidedException();
+        }
+
+        if (registerMemberDto.getCityName() == null || registerMemberDto.getCityName().isEmpty() || registerMemberDto.getCityName().isBlank()) {
+            logger.error(new CityNameNotProvidedException().getMessage());
+            throw new CityNameNotProvidedException();
+        }
+
+
         Member memberToRegister = memberMapper.toMember(registerMemberDto);
         Member registeredMember = memberRepository.registerMember(memberToRegister);
 
+        logger.info("New member has been registered");
         return memberMapper.toDto(registeredMember);
     }
 }
