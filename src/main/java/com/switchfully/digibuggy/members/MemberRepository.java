@@ -13,6 +13,6 @@ public class MemberRepository {
     }
 
     public Member registerMember(Member registerMember) {
-        return memberDatabase.registerMember(registerMember);
+        return memberDatabase.save(registerMember);
     }
 }
