@@ -13,14 +13,13 @@ import org.springframework.test.annotation.DirtiesContext;
 import static io.restassured.http.ContentType.JSON;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class MemberControllerIntegrationTest {
 
     @LocalServerPort
     private int port;
 
     @Test
-    void givenANewMemberWhenYouRegisterAMemberTheMemberIsAddedInTheDatabaseClass() {
+    void givenANewMember_WhenYouRegisterAMember_ThenTheMemberIsAddedInTheDatabaseClass() {
         RegisterMemberDto registerMemberDto = new RegisterMemberDto( "12345678",
                 "bugs@bunny.com",
                 "bugs",
