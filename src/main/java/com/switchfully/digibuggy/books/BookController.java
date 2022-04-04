@@ -22,20 +22,11 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookOverviewDto> getAllBooks() {
-        List<Book> booksToReturn = new ArrayList<>(List.of(
-                new Book("1", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla"),
-                new Book("2", "The prisoner of Azkabon", "J.K.", "Rowling", "blablabla"),
-                new Book("3", "The prisoner of Azkabin", "J.K.", "Rowling", "blablabla")
-        ));
-
-        BookMapper mapper = new BookMapper();
-        List<BookOverviewDto> bookOverviewToDto = new ArrayList<>();
-        booksToReturn.forEach(book -> bookOverviewToDto.add(mapper.bookOverviewToDto(book)));
-        return bookOverviewToDto;
-    }
+//    @GetMapping(produces = "application/json")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<BookOverviewDto> getAllBooks() {
+//        return bookService.getAllBooks();
+//    }
 
     @GetMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

@@ -31,7 +31,7 @@ class BookControllerIntegrationTest {
         bookRepository.save(thePrisonerOfAzkaban);
 
         BookMapper mapper = new BookMapper();
-        BookDto expectedResult = mapper.BookToDto(thePrisonerOfAzkaban);
+        BookDto expectedResult = mapper.bookToDto(thePrisonerOfAzkaban);
 
         BookDto result = RestAssured
                 .given()

@@ -18,4 +18,7 @@ public class BookRepository {
     public Book getBookByIsbn(String isbn) {
         return bookDatabase.getBookByIsbn(isbn);
     }
+
+//    public Book getAllBooks() {
+//    }
 }
