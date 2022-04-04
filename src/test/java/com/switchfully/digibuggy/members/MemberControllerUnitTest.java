@@ -23,458 +23,474 @@ class MemberControllerUnitTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Nested
+    @DisplayName("INSS tests")
+    class INSSTests {
+        @Test
+        void givenANewMember_WhenINSSIsNull_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( null,
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
 
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
 
+        }
 
-    @Test
-    void givenANewMemberWhenINSSIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( null,
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
+        @Test
+        void givenANewMember_WhenINSSIsEmpty_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
 
-                RestAssured
-                        .given()
-                        .body(registerMemberDto)
-                        .accept(JSON)
-                        .contentType(JSON)
-                        .when()
-                        .port(port)
-                        .post("/members")
-                        .then()
-                        .assertThat()
-                        .statusCode(HttpStatus.BAD_REQUEST.value());
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
 
+        @Test
+        void givenANewMember_WhenINSSIsBlank_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "    ",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenINSSAlreadyExists_ThenBadRequestIsThrown() {
+            //GIVEN
+            String alreadyExistingINSS = "44654564";
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( alreadyExistingINSS,
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            memberRepository.registerMember(new Member(
+                    alreadyExistingINSS,
+                    "daffy@duck.com",
+                    "daffy",
+                    "duck",
+                    "ducks street",
+                    "7",
+                    "5000",
+                    "ducks city"
+            ));
+
+            //THEN
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+
+        }
     }
 
-    @Test
-    void givenANewMemberWhenINSSIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
+    @Nested
+    @DisplayName("Empty email tests")
+    class EmailTest {
+        @Test
+        void givenANewMember_WhenEmailIsNull_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "bugs",
+                    null,
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
 
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailIsEmpty_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailIsBlank_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "        ",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
-    @Test
-    void givenANewMemberWhenINSSIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "    ",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
+    @Nested
+    @DisplayName("Email format tests")
+    class EmailFormatTests {
+        @Test
+        void givenANewMember_WhenEmailFormatIsCorrect_ThenMemberIsCreated() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
 
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.CREATED.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailFormatIsWrongNoAtNoDot_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "gfsfdgds",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailFormatIsWrongNoAt_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "gfsf.dgds",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailFormatIsWrongNoDot_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "gfsf@dgds",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenEmailFormatIsWrongDotBeforeAt_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "gf.sf@dgds",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
-    @Test
-    void givenANewMemberWhenINSSAlreadyExistsBadRequestIsThrown() {
-        //GIVEN
-        String alreadyExistingINSS = "44654564";
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( alreadyExistingINSS,
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
+    @Nested
+    @DisplayName("Empty city name tests")
+    class CityTests {
+        @Test
+        void givenANewMember_WhenCityIsNull_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    null);
 
-        memberRepository.registerMember(new Member(
-                alreadyExistingINSS,
-                "daffy@duck.com",
-                "daffy",
-                "duck",
-                "ducks street",
-                "7",
-                "5000",
-                "ducks city"
-        ));
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
 
-        //THEN
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
 
+        @Test
+        void givenANewMember_WhenCityIsEmpty_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    "");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenCityIsBlank_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    "    ");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
-    @Test
-    void givenANewMemberWhenEmailIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "bugs",
-                null,
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
+    @Nested
+    @DisplayName("Empty last name tests")
+    class LastNameTests {
+        @Test
+        void givenANewMember_WhenLastNameIsNull_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    null,
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    null);
 
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+
+        }
+
+        @Test
+        void givenANewMember_WhenLastNameIsEmpty_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "",
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenANewMember_WhenLastNameIsBlank_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "bugs@bunny.com",
+                    "bugs",
+                    "    ",
+                    "Looney tunes street",
+                    "1",
+                    "45",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
-
-    @Test
-    void givenANewMemberWhenEmailIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "        ",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailFormatIsCorrectMemberIsCreated() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.CREATED.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailFormatIsWrongNoAtNoDotBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "gfsfdgds",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailFormatIsWrongNoAtBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "gfsf.dgds",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailFormatIsWrongNoDotBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "gfsf@dgds",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenEmailFormatIsWrongDotBeforeAtBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "gf.sf@dgds",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "1000",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenCityIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "45",
-                null);
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-
-    }
-
-    @Test
-    void givenANewMemberWhenCityIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "45",
-                "");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenCityIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "bunny",
-                "Looney tunes street",
-                "1",
-                "45",
-                "    ");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenLastNameIsNullBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                null,
-                "Looney tunes street",
-                "1",
-                "45",
-                null);
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-
-    }
-
-    @Test
-    void givenANewMemberWhenLastNameIsEmptyBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "",
-                "Looney tunes street",
-                "1",
-                "45",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
-    @Test
-    void givenANewMemberWhenLastNameIsBlankBadRequestIsThrown() {
-        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
-                "bugs@bunny.com",
-                "bugs",
-                "    ",
-                "Looney tunes street",
-                "1",
-                "45",
-                "Looney tunes city");
-
-        RestAssured
-                .given()
-                .body(registerMemberDto)
-                .accept(JSON)
-                .contentType(JSON)
-                .when()
-                .port(port)
-                .post("/members")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
-
 
 }
