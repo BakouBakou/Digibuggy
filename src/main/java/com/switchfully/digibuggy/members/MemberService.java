@@ -21,6 +21,10 @@ public class MemberService {
             throw new IllegalArgumentException();
         }
 
+        if (memberRepository.getByInss(registerMemberDto.getInss()).isPresent()) {
+            throw new INSSAlreadyExistsException();
+        }
+
         Member memberToRegister = memberMapper.toMember(registerMemberDto);
         Member registeredMember = memberRepository.registerMember(memberToRegister);
 
