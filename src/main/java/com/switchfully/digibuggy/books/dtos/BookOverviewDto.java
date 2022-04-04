@@ -2,19 +2,17 @@ package com.switchfully.digibuggy.books.dtos;
 
 import java.util.Objects;
 
-public class BookDto {
+public class BookOverviewDto {
     private final String isbn;
     private final String title;
     private final String authorFirstname;
     private final String authorLastname;
-    private final String summary;
 
-    public BookDto(String isbn, String title, String authorFirstname, String authorLastname, String summary) {
+    public BookOverviewDto(String isbn, String title, String authorFirstname, String authorLastname) {
         this.isbn = isbn;
         this.title = title;
         this.authorFirstname = authorFirstname;
         this.authorLastname = authorLastname;
-        this.summary = summary;
     }
 
     public String getIsbn() {
@@ -33,20 +31,16 @@ public class BookDto {
         return authorLastname;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookDto bookDto = (BookDto) o;
-        return Objects.equals(isbn, bookDto.isbn) && Objects.equals(title, bookDto.title) && Objects.equals(authorFirstname, bookDto.authorFirstname) && Objects.equals(authorLastname, bookDto.authorLastname) && Objects.equals(summary, bookDto.summary);
+        if (!(o instanceof BookOverviewDto)) return false;
+        BookOverviewDto that = (BookOverviewDto) o;
+        return Objects.equals(getIsbn(), that.getIsbn()) && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getAuthorFirstname(), that.getAuthorFirstname()) && Objects.equals(getAuthorLastname(), that.getAuthorLastname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, authorFirstname, authorLastname, summary);
+        return Objects.hash(getIsbn(), getTitle(), getAuthorFirstname(), getAuthorLastname());
     }
 }
