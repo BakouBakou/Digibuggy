@@ -2,6 +2,8 @@ package com.switchfully.digibuggy.members;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class MemberRepository {
 
@@ -14,5 +16,9 @@ public class MemberRepository {
 
     public Member registerMember(Member registerMember) {
         return memberDatabase.save(registerMember);
+    }
+
+    public Optional<Member> getByInss(String inss) {
+        return memberDatabase.getByInss(inss);
     }
 }
