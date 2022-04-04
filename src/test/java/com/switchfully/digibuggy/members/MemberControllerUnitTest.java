@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.members;
 import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -314,6 +315,152 @@ class MemberControllerUnitTest {
                 "Looney tunes street",
                 "1",
                 "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenCityIsNullBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "45",
+                null);
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
+    @Test
+    void givenANewMemberWhenCityIsEmptyBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "45",
+                "");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenCityIsBlankBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "45",
+                "    ");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenLastNameIsNullBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                null,
+                "Looney tunes street",
+                "1",
+                "45",
+                null);
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
+    @Test
+    void givenANewMemberWhenLastNameIsEmptyBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "",
+                "Looney tunes street",
+                "1",
+                "45",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenLastNameIsBlankBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "    ",
+                "Looney tunes street",
+                "1",
+                "45",
                 "Looney tunes city");
 
         RestAssured
