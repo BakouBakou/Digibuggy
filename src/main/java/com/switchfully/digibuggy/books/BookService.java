@@ -25,10 +25,12 @@ public class BookService {
             logger.error(new ISBNNotFoundException().getMessage());
             throw new ISBNNotFoundException();
         }
+        logger.info("getBookByIsbn method is called");
         return bookMapper.bookToDto(bookRepository.getBookByIsbn(isbn));
     }
 
     public List<BookOverviewDto> getAllBooks() {
+        logger.info("getAllBooks method is called");
         return bookMapper.bookOverviewToDto(bookRepository.getAllBooks().values());
     }
 }
