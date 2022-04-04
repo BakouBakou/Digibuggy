@@ -21,6 +21,10 @@ public class BookService {
     }
 
     public BookDto getBookByIsbn(String isbn) {
+        if (bookRepository.getBookByIsbn(isbn) == null) {
+            logger.error(new ISBNNotFoundException().getMessage());
+            throw new ISBNNotFoundException();
+        }
         return bookMapper.bookToDto(bookRepository.getBookByIsbn(isbn));
     }
 

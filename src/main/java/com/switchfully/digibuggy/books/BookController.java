@@ -16,7 +16,11 @@ import java.util.List;
 @RequestMapping(path = "/books")
 public class BookController {
 
-    BookService bookService;
+
+    private final BookService bookService;
+    private final Logger logger = LoggerFactory.getLogger(BookController.class);
+    public static final String ISBN_NOT_FOUND_IN_DATABASE = "The ISBN doesn't exist in our library";
+
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
