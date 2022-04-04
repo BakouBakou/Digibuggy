@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.members;
 
 import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,8 @@ class MemberControllerUnitTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+
 
 
     @Test
@@ -186,6 +189,126 @@ class MemberControllerUnitTest {
     void givenANewMemberWhenEmailIsBlankBadRequestIsThrown() {
         RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
                 "        ",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsCorrectMemberIsCreated() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "bugs@bunny.com",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoAtNoDotBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsfdgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoAtBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsf.dgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongNoDotBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gfsf@dgds",
+                "bugs",
+                "bunny",
+                "Looney tunes street",
+                "1",
+                "1000",
+                "Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailFormatIsWrongDotBeforeAtBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                "gf.sf@dgds",
                 "bugs",
                 "bunny",
                 "Looney tunes street",
