@@ -26,11 +26,11 @@ public class BookController {
         this.bookService = bookService;
     }
 
-//    @GetMapping(produces = "application/json")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<BookOverviewDto> getAllBooks() {
-//        return bookService.getAllBooks();
-//    }
+    @GetMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookOverviewDto> getAllBooks() {
+        return bookService.getAllBooks();
+    }
 
     @GetMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

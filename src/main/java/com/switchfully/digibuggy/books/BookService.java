@@ -28,7 +28,7 @@ public class BookService {
         return bookMapper.bookToDto(bookRepository.getBookByIsbn(isbn));
     }
 
-//    public List<BookOverviewDto> getAllBooks() {
-//        return bookMapper.bookOverviewToDto((bookRepository.getAllBooks()));
-//    }
+    public List<BookOverviewDto> getAllBooks() {
+        return bookMapper.bookOverviewToDto(bookRepository.getAllBooks().values());
+    }
 }
