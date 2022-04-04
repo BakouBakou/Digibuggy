@@ -13,7 +13,7 @@ public class MemberDatabase {
         this.membersById = new ConcurrentHashMap<>();
     }
 
-    public Member registerMember(Member member) {
+    public Member save(Member member) {
         membersById.put(member.getId(), member);
         return membersById.get(member.getId());
     }
