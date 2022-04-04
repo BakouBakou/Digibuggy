@@ -21,4 +21,8 @@ public class MemberRepository {
     public Optional<Member> getByInss(String inss) {
         return memberDatabase.getByInss(inss);
     }
+
+    public Optional<Member> getByEmail(String emailAddress) {
+        return memberDatabase.getByEmail(emailAddress);
+    }
 }

@@ -33,7 +33,12 @@ public class MemberService {
 
         checkForNullBlankOrEmptyExceptions(registerMemberDto.getEmailAddress(), new EmailNotProvidedException());
 
-        if (!registerMemberDto.getEmailAddress().matches("^(\\S+)@(\\S+)\\.(\\S+)$")) {
+        if (memberRepository.getByEmail(registerMemberDto.getEmailAddress()).isPresent()) {
+            logger.error(new EmailAlreadyExistsException().getMessage());
+            throw new EmailAlreadyExistsException();
+        }
+
+        if (!registerMemberDto.getEmailAddress().matches("^(\\S+)@(\\S+)\\.([a-zA-Z]+)$")) {
             logger.error(new WrongEmailFormatException().getMessage());
             throw new WrongEmailFormatException();
         }

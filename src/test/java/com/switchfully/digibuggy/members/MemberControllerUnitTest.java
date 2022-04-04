@@ -243,6 +243,30 @@ class MemberControllerUnitTest {
         }
 
         @Test
+        void givenANewMember_WhenEmailFormatIsWrongSpecialCharacter_ThenBadRequestIsThrown() {
+            RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
+                    "gfsssf@dg.d_s",
+                    "bugs",
+                    "bunny",
+                    "Looney tunes street",
+                    "1",
+                    "1000",
+                    "Looney tunes city");
+
+            RestAssured
+                    .given()
+                    .body(registerMemberDto)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .post("/members")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
         void givenANewMember_WhenEmailFormatIsWrongNoAtNoDot_ThenBadRequestIsThrown() {
             RegisterMemberDto registerMemberDto = new RegisterMemberDto( "Bugs",
                     "gfsfdgds",

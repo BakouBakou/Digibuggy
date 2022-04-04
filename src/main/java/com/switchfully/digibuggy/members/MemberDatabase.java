@@ -26,4 +26,11 @@ public class MemberDatabase {
                 .filter(member -> member.getInss().equals(inss))
                 .findAny();
     }
+
+    public Optional<Member> getByEmail(String emailAddress) {
+        return membersById.values()
+                .stream()
+                .filter(member -> member.getEmailAddress().equals(emailAddress))
+                .findAny();
+    }
 }
