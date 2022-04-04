@@ -21,15 +21,14 @@ public class MemberMapper {
     }
 
     public MemberDto toDto(Member memberToRegister) {
-        return new MemberDto()
-                .setId(memberToRegister.getId())
-                .setInss(memberToRegister.getInss())
-                .setEmailAddress(memberToRegister.getEmailAddress())
-                .setFirstName(memberToRegister.getFirstName())
-                .setLastName(memberToRegister.getLastName())
-                .setStreetName(memberToRegister.getStreetName())
-                .setStreetNumber(memberToRegister.getStreetNumber())
-                .setPostalCode(memberToRegister.getPostalCode())
-                .setCityName(memberToRegister.getCityName());
+        return new MemberDto(memberToRegister.getId(),
+                memberToRegister.getInss(),
+                memberToRegister.getEmailAddress(),
+                memberToRegister.getFirstName(),
+                memberToRegister.getLastName(),
+                memberToRegister.getStreetName(),
+                memberToRegister.getStreetNumber(),
+                memberToRegister.getPostalCode(),
+                memberToRegister.getCityName());
     }
 }
