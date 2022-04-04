@@ -15,7 +15,6 @@ public class MemberController {
 
     public static final String INSS_CANNOT_BE_EMPTY = "The INSS cannot be empty";
     private final MemberService memberService;
-    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
@@ -24,7 +23,6 @@ public class MemberController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public MemberDto registerMember(@RequestBody RegisterMemberDto registerMemberDto) {
-        try {
             return memberService.registerMember(registerMemberDto);
         }
         catch (IllegalArgumentException e) {

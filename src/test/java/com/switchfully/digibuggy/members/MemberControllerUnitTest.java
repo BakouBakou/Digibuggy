@@ -87,5 +87,79 @@ class MemberControllerUnitTest {
 
     }
 
+    @Test
+    void givenANewMemberWhenEmailIsNullBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
+                .setInss("Bugs")
+                .setFirstName("bugs")
+                .setLastName("bunny")
+                .setStreetName("Looney tunes street")
+                .setStreetNumber("1")
+                .setPostalCode("1000")
+                .setCityName("Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailIsEmptyBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
+                .setInss("Bugs")
+                .setEmailAddress("")
+                .setFirstName("bugs")
+                .setLastName("bunny")
+                .setStreetName("Looney tunes street")
+                .setStreetNumber("1")
+                .setPostalCode("1000")
+                .setCityName("Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenANewMemberWhenEmailIsBlankBadRequestIsThrown() {
+        RegisterMemberDto registerMemberDto = new RegisterMemberDto()
+                .setInss("Bugs")
+                .setEmailAddress("         ")
+                .setFirstName("bugs")
+                .setLastName("bunny")
+                .setStreetName("Looney tunes street")
+                .setStreetNumber("1")
+                .setPostalCode("1000")
+                .setCityName("Looney tunes city");
+
+        RestAssured
+                .given()
+                .body(registerMemberDto)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/members")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
 
 }
