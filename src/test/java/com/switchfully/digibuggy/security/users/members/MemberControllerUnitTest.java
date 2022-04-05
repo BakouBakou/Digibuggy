@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.users.members;
+package com.switchfully.digibuggy.security.users.members;
 
 import com.switchfully.digibuggy.users.members.Member;
 import com.switchfully.digibuggy.users.members.MemberRepository;
