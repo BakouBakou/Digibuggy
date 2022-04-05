@@ -32,7 +32,7 @@ class BookControllerIntegrationTest {
     @Test
     void givenISBN_whenGetBookIsCalled_thenBookIsReturned() {
         Book thePrisonerOfAzkaban = new Book("123456789132", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla");
-        bookRepository.save(thePrisonerOfAzkaban);
+        bookRepository.saveBook(thePrisonerOfAzkaban);
 
         BookDto expectedResult = mapper.bookToDto(thePrisonerOfAzkaban);
 
@@ -60,9 +60,9 @@ class BookControllerIntegrationTest {
                 new Book("3", "The prisoner of Azkabin", "J.K.", "Rowling", "blablabla")
         ));
 
-        bookRepository.save(bookList.get(0));
-        bookRepository.save(bookList.get(1));
-        bookRepository.save(bookList.get(2));
+        bookRepository.saveBook(bookList.get(0));
+        bookRepository.saveBook(bookList.get(1));
+        bookRepository.saveBook(bookList.get(2));
 
         List<BookOverviewDto> expectedDtoList = new ArrayList<>();
 

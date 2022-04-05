@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
+import com.switchfully.digibuggy.books.dtos.LendABookDto;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -23,5 +24,9 @@ public class BookMapper {
         return bookCollection.stream()
                 .map(book -> bookOverviewToDto(book))
                 .collect(Collectors.toList());
+    }
+
+    public LendABook toLendABook(LendABookDto lendABookDto) {
+        return new LendABook(lendABookDto.getMemberId(), lendABookDto.getISBN());
     }
 }

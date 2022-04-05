@@ -13,8 +13,8 @@ public class BookRepository {
         this.bookDatabase = bookDatabase;
     }
 
-    public void save(Book book) {
-        bookDatabase.save(book);
+    public void saveBook(Book book) {
+        bookDatabase.saveBook(book);
     }
 
     public Book getBookByIsbn(String isbn) {
@@ -23,5 +23,9 @@ public class BookRepository {
 
     public Map<String, Book> getAllBooks() {
         return bookDatabase.getAllBooks();
+    }
+
+    public void lendBook(LendABook lendABook) {
+        bookDatabase.saveLentBook(lendABook);
     }
 }
