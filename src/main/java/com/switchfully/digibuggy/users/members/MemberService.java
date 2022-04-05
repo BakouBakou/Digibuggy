@@ -1,8 +1,8 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
-import com.switchfully.digibuggy.members.dtos.MemberDto;
-import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
-import com.switchfully.digibuggy.members.exceptions.*;
+import com.switchfully.digibuggy.users.members.dtos.MemberDto;
+import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
+import com.switchfully.digibuggy.users.members.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

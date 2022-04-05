@@ -1,6 +1,8 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users;
 
-import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
+import com.switchfully.digibuggy.users.members.Member;
+import com.switchfully.digibuggy.users.members.MemberRepository;
+import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

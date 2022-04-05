@@ -1,5 +1,6 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
+import com.switchfully.digibuggy.users.members.Member;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

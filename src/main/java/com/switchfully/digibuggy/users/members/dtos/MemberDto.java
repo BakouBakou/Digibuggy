@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.members.dtos;
+package com.switchfully.digibuggy.users.members.dtos;
 
 public class MemberDto {
     private final String id;

@@ -1,14 +1,13 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users;
 
-import com.switchfully.digibuggy.members.dtos.MemberDto;
-import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
+import com.switchfully.digibuggy.users.members.dtos.MemberDto;
+import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.DirtiesContext;
 
 import static io.restassured.http.ContentType.JSON;
 

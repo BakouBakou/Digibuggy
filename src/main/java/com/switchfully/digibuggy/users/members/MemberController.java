@@ -1,13 +1,10 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
-import com.switchfully.digibuggy.members.dtos.MemberDto;
-import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.switchfully.digibuggy.users.members.dtos.MemberDto;
+import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/members")

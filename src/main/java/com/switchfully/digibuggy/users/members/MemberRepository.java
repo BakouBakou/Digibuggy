@@ -1,5 +1,7 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
+import com.switchfully.digibuggy.users.members.Member;
+import com.switchfully.digibuggy.users.members.MemberDatabase;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

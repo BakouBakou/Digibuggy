@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
 import java.util.UUID;
 

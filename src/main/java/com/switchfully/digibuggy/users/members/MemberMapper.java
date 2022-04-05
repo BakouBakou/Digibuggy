@@ -1,7 +1,8 @@
-package com.switchfully.digibuggy.members;
+package com.switchfully.digibuggy.users.members;
 
-import com.switchfully.digibuggy.members.dtos.MemberDto;
-import com.switchfully.digibuggy.members.dtos.RegisterMemberDto;
+import com.switchfully.digibuggy.users.members.Member;
+import com.switchfully.digibuggy.users.members.dtos.MemberDto;
+import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
 import org.springframework.stereotype.Component;
 
 @Component
