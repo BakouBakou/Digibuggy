@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
+import com.switchfully.digibuggy.books.dtos.LendABookDto;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -83,26 +84,25 @@ class BookControllerIntegrationTest {
 
     }
 
-//    @Test
-//    void givenMembersIDAndBookISBN_WhenLendBook_ThenAddBookToLendedBooks() {
-//        String memberId = "54654564654";
-//        String isbn = "123456789132";
-//
-//        LendDto toLend = new LendDto(memberId, isbn);
-//
-//        RestAssured
-//                .given()
-//                .body(toLend)
-//                .accept(JSON)
-//                .contentType(JSON)
-//                .when()
-//                .port(port)
-//                .post("/books/lend")
-//                .then()
-//                .assertThat()
-//                .statusCode(HttpStatus.ACCEPTED.value());
-//
-//        Assertions.assertThat().isEqualTo();
-//    }
+    @Test
+    void givenMembersIDAndBookISBN_WhenLendBook_ThenAddBookToLentBooks() {
+        String memberId = "54654564654";
+        String isbn = "123456789132";
+
+        LendABookDto toLend = new LendABookDto(memberId, isbn);
+
+        RestAssured
+                .given()
+                .body(toLend)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/books/lend")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.ACCEPTED.value());
+
+    }
 
 }

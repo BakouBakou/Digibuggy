@@ -6,8 +6,8 @@ public class LendABook {
     private String lendingId;
     private LocalDate date;
 
-    public LendABook(String lendingId, LocalDate date) {
-        this.lendingId = lendingId;
-        this.date = date;
+
+    public String getLendingId() {
+        return this.lendingId;
     }
 }
