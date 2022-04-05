@@ -1,5 +1,8 @@
 package com.switchfully.digibuggy.users.admins;
 
+
+import com.switchfully.digibuggy.security.Feature;
+import com.switchfully.digibuggy.security.SecurityService;
 import com.switchfully.digibuggy.users.librarians.dtos.LibrarianDto;
 import com.switchfully.digibuggy.users.librarians.dtos.RegisterLibrarianDto;
 import org.springframework.http.HttpStatus;
@@ -12,8 +15,11 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    public AdminController(AdminService adminService) {
+    private final SecurityService securityService;
+
+    public AdminController(AdminService adminService, SecurityService securityService) {
         this.adminService = adminService;
+        this.securityService = securityService;
     }
 
     @PostMapping(path = "/librarians", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

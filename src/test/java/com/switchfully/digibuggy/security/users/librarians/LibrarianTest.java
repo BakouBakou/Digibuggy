@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.users.librarians;
+package com.switchfully.digibuggy.security.users.librarians;
 
 import com.switchfully.digibuggy.users.librarians.dtos.LibrarianDto;
 import com.switchfully.digibuggy.users.librarians.dtos.RegisterLibrarianDto;
@@ -92,7 +92,7 @@ public class LibrarianTest {
     }
 
     @Test
-    void givenNoAuthorizationInHeader_whenCreatingLibrarian_ThenExceptionIsThrwon() {
+    void givenNoAuthorizationInHeader_whenCreatingLibrarian_ThenExceptionIsThrown() {
         RegisterLibrarianDto registerLibrarianDto = new RegisterLibrarianDto("Bugs", "Bunny", "bugs@bunny.com");
 
         Response librarianDto = RestAssured
