@@ -1,11 +1,13 @@
 package com.switchfully.digibuggy.books;
 
+import com.switchfully.digibuggy.books.dtos.LendABookDto;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static io.restassured.http.ContentType.JSON;
@@ -20,6 +22,9 @@ public class BookControllerUnitTest {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    BookMapper bookMapper;
+
     @Test
     void givenISBN_WhenISBNDoesNotExistsInDatabase_ThenBadRequestIsThrown() {
         //GIVEN
@@ -32,6 +37,29 @@ public class BookControllerUnitTest {
                 .when()
                 .port(port)
                 .get("/books/" + isbnNotInDB)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
+    @Test
+    void givenABooksISBN_WhenBookIsAlreadyLent_ThenBadRequestIsThrown() {
+       //GIVEN
+        String memberId = "54654564654";
+        String isbn = "123456789132";
+        LendABookDto toLendTwice = new LendABookDto(memberId, isbn);
+        bookRepository.lendBook(bookMapper.toLendABook(toLendTwice));
+
+        //THEN
+        RestAssured
+                .given()
+                .body(toLendTwice)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/books/lend")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.BAD_REQUEST.value());

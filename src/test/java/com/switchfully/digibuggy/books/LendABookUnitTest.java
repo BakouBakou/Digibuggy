@@ -15,4 +15,5 @@ public class LendABookUnitTest {
         //THEN
         Assertions.assertThat(lendABook.getDueDate()).isEqualTo(LocalDate.now().plusWeeks(3));
     }
+
 }
