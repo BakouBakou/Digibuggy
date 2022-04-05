@@ -38,6 +38,7 @@ public class BookService {
     }
 
     public void lendBook(LendABookDto lendABookDto) {
+        logger.info("lendBook method is called");
         bookRepository.lendBook(bookMapper.toLendABook(lendABookDto));
     }
 }

@@ -65,5 +65,27 @@ public class BookControllerUnitTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value());
 
     }
+
+    @Test
+    void givenABooksISBN_WhenLendingABookThatDoesNotExistInDatabase_ThenBadRequestIsThrown() {
+        //GIVEN
+        String memberId = "54654564654";
+        String isbn = "123456789132";
+        LendABookDto toLendBookThatDoesNotExist = new LendABookDto(memberId, isbn);
+
+        //THEN
+        RestAssured
+                .given()
+                .body(toLendBookThatDoesNotExist)
+                .accept(JSON)
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .post("/books/lend")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
 }
 
