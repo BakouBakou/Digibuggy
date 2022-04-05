@@ -1,5 +1,6 @@
 package com.switchfully.digibuggy.books;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class LendABook {
@@ -20,5 +21,9 @@ public class LendABook {
 
     public String getLendingId() {
         return lendingId;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 }
