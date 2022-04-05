@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.users;
+package com.switchfully.digibuggy.users.members;
 
 import com.switchfully.digibuggy.users.members.dtos.MemberDto;
 import com.switchfully.digibuggy.users.members.dtos.RegisterMemberDto;
