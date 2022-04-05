@@ -27,4 +27,8 @@ public class MemberRepository {
     public Optional<Member> getByEmail(String emailAddress) {
         return memberDatabase.getByEmail(emailAddress);
     }
+
+    public Optional<Member> getById(String memberId) {
+        return memberDatabase.getById(memberId);
+    }
 }
