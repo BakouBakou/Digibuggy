@@ -24,6 +24,16 @@ public class MemberService {
 
         logger.info("Registering a new member");
 
+        validateRegisterMemberDto(registerMemberDto);
+
+        Member memberToRegister = memberMapper.toMember(registerMemberDto);
+        Member registeredMember = memberRepository.registerMember(memberToRegister);
+
+        logger.info("New member has been registered");
+        return memberMapper.toDto(registeredMember);
+    }
+
+    private void validateRegisterMemberDto(RegisterMemberDto registerMemberDto) {
         checkForNullBlankOrEmptyExceptions(registerMemberDto.getInss(), new INSSNotProvidedException());
 
         if (memberRepository.getByInss(registerMemberDto.getInss()).isPresent()) {
@@ -46,12 +56,6 @@ public class MemberService {
         checkForNullBlankOrEmptyExceptions(registerMemberDto.getLastName(), new LastNameNotProvidedException());
 
         checkForNullBlankOrEmptyExceptions(registerMemberDto.getCityName(), new CityNameNotProvidedException());
-
-        Member memberToRegister = memberMapper.toMember(registerMemberDto);
-        Member registeredMember = memberRepository.registerMember(memberToRegister);
-
-        logger.info("New member has been registered");
-        return memberMapper.toDto(registeredMember);
     }
 
     private boolean isNullBlankOrEmpty(String stringToCheck) {

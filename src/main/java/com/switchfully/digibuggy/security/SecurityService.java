@@ -23,9 +23,10 @@ public class SecurityService {
     }
 
     public void validateAuthorization(String authorization, Feature feature) {
-
         UsernamePassword usernamePassword = getUsernamePassword(authorization);
-        // User user = userRepository.getUser(usernamePassword.getUsername());
+
+        logger.info("Start validation for: " + usernamePassword.getUsername());
+
         User user = getUser(usernamePassword.getUsername());
         if(user == null) {
             logger.error("Unknown user" + usernamePassword.getUsername());
@@ -39,7 +40,7 @@ public class SecurityService {
             logger.error("User " + usernamePassword.getUsername() + " does not have access to " + Feature.REGISTER_LIBRARIAN);
             throw new UnauthorizatedException();
         }
-
+        logger.info("Validation successful for: " + usernamePassword.getUsername());
     }
 
     private User getUser(String username) {
@@ -48,7 +49,6 @@ public class SecurityService {
         if (admin == null)  return null;
 
         return new User(admin.getUsername(), admin.getPassword(), Role.ADMIN);
-
     }
 
     private UsernamePassword getUsernamePassword(String authorization) {

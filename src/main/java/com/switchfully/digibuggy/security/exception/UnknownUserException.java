@@ -5,4 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class UnknownUserException extends RuntimeException {
+    public UnknownUserException() {
+        super("The provided username is unknown");
+    }
 }

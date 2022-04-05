@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final AdminService adminService;
-
     private final SecurityService securityService;
 
     public AdminController(AdminService adminService, SecurityService securityService) {
