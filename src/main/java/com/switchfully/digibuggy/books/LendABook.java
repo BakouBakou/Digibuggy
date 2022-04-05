@@ -26,4 +26,8 @@ public class LendABook {
     public LocalDate getDueDate() {
         return dueDate;
     }
+
+    public String getIsbn() {
+        return isbn;
+    }
 }
