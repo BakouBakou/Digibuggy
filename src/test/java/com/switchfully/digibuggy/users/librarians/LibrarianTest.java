@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.users.librarians;
 
 import com.switchfully.digibuggy.users.members.dtos.MemberDto;
 import io.restassured.RestAssured;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -35,7 +36,13 @@ public class LibrarianTest {
                     .extract()
                     .as(LibrarianDto.class);
 
+        Assertions.assertThat(librarianDto.getFirstName()).isEqualTo(registerLibrarianDto.getFirstName());
+        Assertions.assertThat(librarianDto.getLastName()).isEqualTo(registerLibrarianDto.getLastName());
+        Assertions.assertThat(librarianDto.getEmailAddress()).isEqualTo(registerLibrarianDto.getEmailAddress());
+
     }
+
+
 }
 
 

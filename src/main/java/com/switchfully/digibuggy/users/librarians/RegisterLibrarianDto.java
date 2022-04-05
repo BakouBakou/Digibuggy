@@ -1,18 +1,18 @@
 package com.switchfully.digibuggy.users.librarians;
 
 public class RegisterLibrarianDto {
-    private final String lastname;
+    private final String lastName;
     private final String firstName;
     private final String emailAddress;
 
-    public RegisterLibrarianDto(String firstName, String lastname, String emailAddress) {
+    public RegisterLibrarianDto(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
         this.emailAddress = emailAddress;
-        this.lastname = lastname;
+        this.lastName = lastName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getFirstName() {
