@@ -47,7 +47,7 @@ public class SecurityService {
         if (admin == null)  return null;
 
         return new User(admin.getUsername(), admin.getPassword(), Role.ADMIN);
-        
+
     }
 
     private UsernamePassword getUsernamePassword(String authorization) {
