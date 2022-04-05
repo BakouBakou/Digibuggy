@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.books.dtos.LentBookDto;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -28,5 +29,14 @@ public class BookMapper {
 
     public LendABook toLendABook(LendABookDto lendABookDto) {
         return new LendABook(lendABookDto.getMemberId(), lendABookDto.getISBN());
+    }
+
+    public LentBookDto toLentBook(LendABook lendABook) {
+        return new LentBookDto(
+                lendABook.getMemberId(),
+                lendABook.getIsbn(),
+                lendABook.getLendingId(),
+                lendABook.getDueDate()
+        );
     }
 }

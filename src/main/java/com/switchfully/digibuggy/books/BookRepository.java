@@ -26,8 +26,8 @@ public class BookRepository {
         return bookDatabase.getAllBooks();
     }
 
-    public void lendBook(LendABook lendABook) {
-        bookDatabase.saveLentBook(lendABook);
+    public LendABook lendBook(LendABook lendABook) {
+        return bookDatabase.saveLentBook(lendABook);
     }
 
     public Optional<LendABook> getLentBookByIsbn(String isbn) {

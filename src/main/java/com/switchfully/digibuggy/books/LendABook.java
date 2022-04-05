@@ -28,4 +28,8 @@ public class LendABook {
     public String getIsbn() {
         return isbn;
     }
+
+    public String getMemberId() {
+        return memberId;
+    }
 }

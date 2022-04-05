@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.books.dtos.LentBookDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,10 +38,10 @@ public class BookController {
         return bookService.getBookByIsbn(isbn);
     }
 
-    @PostMapping(path = "/lend", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/lend", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void lendBook(@RequestBody LendABookDto lendABookDto) {
-        bookService.lendBook(lendABookDto);
+    public LentBookDto lendBook(@RequestBody LendABookDto lendABookDto) {
+        return bookService.lendBook(lendABookDto);
     }
 
     @DeleteMapping(path = "/return/{lendingId}")

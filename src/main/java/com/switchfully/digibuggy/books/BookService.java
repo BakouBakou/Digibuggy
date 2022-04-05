@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.books.dtos.LentBookDto;
 import com.switchfully.digibuggy.books.exceptions.BookAlreadyLentException;
 import com.switchfully.digibuggy.books.exceptions.BookDoesNotExistException;
 import com.switchfully.digibuggy.books.exceptions.ISBNNotFoundException;
@@ -42,23 +43,10 @@ public class BookService {
         return bookMapper.bookOverviewToDto(bookRepository.getAllBooks().values());
     }
 
-    public void lendBook(LendABookDto lendABookDto) {
+    public LentBookDto lendBook(LendABookDto lendABookDto) {
         logger.info("lendBook method is called by member with id " + lendABookDto.getMemberId() + " and with isbn " + lendABookDto.getISBN());
 
-        if (memberRepository.getById(lendABookDto.getMemberId()).isEmpty()) {
-            logger.error(new MemberDoesNotExistException(lendABookDto.getMemberId()).getMessage());
-            throw new MemberDoesNotExistException(lendABookDto.getMemberId());
-        }
-
-        if (bookRepository.getBookByIsbn(lendABookDto.getISBN()) == null) {
-            logger.error(new BookDoesNotExistException(lendABookDto.getISBN()).getMessage());
-            throw new BookDoesNotExistException(lendABookDto.getISBN());
-        }
-
-        if (bookRepository.getLentBookByIsbn(lendABookDto.getISBN()).isPresent()) {
-            logger.error(new BookAlreadyLentException(lendABookDto.getISBN()).getMessage());
-            throw new BookAlreadyLentException(lendABookDto.getISBN());
-        }
+        validateLendABookDto(lendABookDto);
 
         logger.info("Book with isbn " + lendABookDto.getISBN() + " is lent by member with id " + lendABookDto.getMemberId());
         LendABook lendABook = bookMapper.toLendABook(lendABookDto);

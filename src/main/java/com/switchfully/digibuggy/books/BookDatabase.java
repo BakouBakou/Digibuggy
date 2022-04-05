@@ -28,8 +28,9 @@ public class BookDatabase {
         return bookDatabase;
     }
 
-    public void saveLentBook(LendABook lendABook) {
+    public LendABook saveLentBook(LendABook lendABook) {
         lendBookDatabase.put(lendABook.getLendingId(), lendABook);
+        return lendBookDatabase.get(lendABook.getLendingId());
     }
 
     public Optional<LendABook> getLentBookByIsbn(String isbn) {
