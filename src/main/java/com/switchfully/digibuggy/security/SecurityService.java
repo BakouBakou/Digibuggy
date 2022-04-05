@@ -4,7 +4,6 @@ import com.switchfully.digibuggy.security.exception.UnauthorizatedException;
 import com.switchfully.digibuggy.security.exception.UnknownUserException;
 import com.switchfully.digibuggy.security.exception.WrongPasswordException;
 import com.switchfully.digibuggy.users.admins.Admin;
-import com.switchfully.digibuggy.users.admins.AdminDatabase;
 import com.switchfully.digibuggy.users.admins.AdminRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
