@@ -86,6 +86,8 @@ class BookControllerIntegrationTest {
 
     @Test
     void givenMembersIDAndBookISBN_WhenLendBook_ThenAddBookToLentBooks() {
+        Book thePrisonerOfAzkaban = new Book("123456789132", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla");
+        bookRepository.saveBook(thePrisonerOfAzkaban);
         String memberId = "54654564654";
         String isbn = "123456789132";
 
