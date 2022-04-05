@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/admin")
 public class AdminController {
 
-    @Autowired
-    private LibrarianDatabase librarianDatabase;
+    private final AdminService adminService;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @PostMapping(path = "/librarians", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public LibrarianDto registerLibrarian(@RequestBody RegisterLibrarianDto registerLibrarianDto) {
 
-        Librarian librarian = new Librarian(registerLibrarianDto.getFirstName(), registerLibrarianDto.getLastName(), registerLibrarianDto.getEmailAddress());
-        LibrarianMapper mapper = new LibrarianMapper();
-        LibrarianDto librarianDto = mapper.librarianToDto(librarianDatabase.save(librarian));
-        return librarianDto;
+
+        return adminService.registerLibrarian(registerLibrarianDto);
     }
 
 }
