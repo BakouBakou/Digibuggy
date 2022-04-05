@@ -33,4 +33,8 @@ public class BookRepository {
     public Optional<LendABook> getLentBookByIsbn(String isbn) {
         return bookDatabase.getLentBookByIsbn(isbn);
     }
+
+    public void returnBook(String lendingId) {
+        bookDatabase.deleteLentBook(lendingId);
+    }
 }

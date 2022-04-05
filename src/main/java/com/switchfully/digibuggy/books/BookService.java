@@ -61,6 +61,30 @@ public class BookService {
         }
 
         logger.info("Book with isbn " + lendABookDto.getISBN() + " is lent by member with id " + lendABookDto.getMemberId());
-        bookRepository.lendBook(bookMapper.toLendABook(lendABookDto));
+        LendABook lendABook = bookMapper.toLendABook(lendABookDto);
+        bookRepository.lendBook(lendABook);
+        return bookMapper.toLentBook(lendABook);
+    }
+
+    private void validateLendABookDto(LendABookDto lendABookDto) {
+        if (memberRepository.getById(lendABookDto.getMemberId()).isEmpty()) {
+            logger.error(new MemberDoesNotExistException(lendABookDto.getMemberId()).getMessage());
+            throw new MemberDoesNotExistException(lendABookDto.getMemberId());
+        }
+
+        if (bookRepository.getBookByIsbn(lendABookDto.getISBN()) == null) {
+            logger.error(new BookDoesNotExistException(lendABookDto.getISBN()).getMessage());
+            throw new BookDoesNotExistException(lendABookDto.getISBN());
+        }
+
+        if (bookRepository.getLentBookByIsbn(lendABookDto.getISBN()).isPresent()) {
+            logger.error(new BookAlreadyLentException(lendABookDto.getISBN()).getMessage());
+            throw new BookAlreadyLentException(lendABookDto.getISBN());
+        }
+    }
+
+    public void returnBook(String lendingId) {
+        logger.info("returnBook method is called for lendingID " + lendingId);
+        bookRepository.returnBook(lendingId);
     }
 }

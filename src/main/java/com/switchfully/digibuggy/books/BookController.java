@@ -42,6 +42,12 @@ public class BookController {
     public void lendBook(@RequestBody LendABookDto lendABookDto) {
         bookService.lendBook(lendABookDto);
     }
+
+    @DeleteMapping(path = "/return/{lendingId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void returnBook(@PathVariable String lendingId) {
+        bookService.returnBook(lendingId);
+    }
 }
 
 

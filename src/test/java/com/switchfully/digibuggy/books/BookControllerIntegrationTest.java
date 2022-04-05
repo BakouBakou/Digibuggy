@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.books.dtos.LentBookDto;
 import com.switchfully.digibuggy.users.members.Member;
 import com.switchfully.digibuggy.users.members.MemberRepository;
 import io.restassured.RestAssured;
@@ -43,15 +44,15 @@ class BookControllerIntegrationTest {
 
         BookDto result = RestAssured
                 .given()
-                    .accept(JSON)
+                .accept(JSON)
                 .when()
-                    .port(port)
-                    .get("/books/" + thePrisonerOfAzkaban.getIsbn())
+                .port(port)
+                .get("/books/" + thePrisonerOfAzkaban.getIsbn())
                 .then()
-                    .assertThat()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract()
-                    .as(BookDto.class);
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto.class);
 
         Assertions.assertThat(result).isEqualTo(expectedResult);
 
@@ -100,7 +101,7 @@ class BookControllerIntegrationTest {
 
         LendABookDto toLend = new LendABookDto(memberId, isbn);
 
-        RestAssured
+        LentBookDto actualLendBookDto = RestAssured
                 .given()
                 .body(toLend)
                 .accept(JSON)
@@ -110,8 +111,35 @@ class BookControllerIntegrationTest {
                 .post("/books/lend")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.ACCEPTED.value());
+                .statusCode(HttpStatus.ACCEPTED.value())
+                .extract()
+                .as(LentBookDto.class);
 
+        Assertions.assertThat(actualLendBookDto.getLendingId()).isNotBlank().isNotEmpty().isNotNull();
+        Assertions.assertThat(actualLendBookDto.getDueDate()).isNotNull();
+        Assertions.assertThat(actualLendBookDto.getIsbn()).isEqualTo(toLend.getISBN());
+        Assertions.assertThat(actualLendBookDto.getMemberId()).isEqualTo(toLend.getMemberId());
     }
 
+    @Test
+    void givenLendingId_WhenReturnBook_ThenBookIsDeletedFromLendBookDatabase(){
+        Book thePrisonerOfAzkaban = new Book("123456789132", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla");
+        bookRepository.saveBook(thePrisonerOfAzkaban);
+        Member member = new Member("8787643", "member@mail.test", "some", "member", "some street", "10", "5000", "Namur");
+        memberRepository.registerMember(member);
+        LendABook lentBook = bookRepository.lendBook(new LendABook(member.getId(), thePrisonerOfAzkaban.getIsbn()));
+        String lendingId = lentBook.getLendingId();
+
+        RestAssured
+                .given()
+                .contentType(JSON)
+                .when()
+                .port(port)
+                .delete("/books/return/" + lendingId)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value());
+
+                 org.junit.jupiter.api.Assertions.assertTrue(bookRepository.getLentBookByIsbn(lentBook.getIsbn()).isEmpty());
+    }
 }

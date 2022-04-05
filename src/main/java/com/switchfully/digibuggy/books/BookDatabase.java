@@ -15,8 +15,6 @@ public class BookDatabase {
 
     private final ConcurrentHashMap<String, Book> bookDatabase = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, LendABook> lendBookDatabase = new ConcurrentHashMap<>();
-    private final Logger logger = LoggerFactory.getLogger(BookController.class);
-
 
     public Book getBookByIsbn(String isbn) {
         return bookDatabase.get(isbn);
@@ -36,5 +34,9 @@ public class BookDatabase {
 
     public Optional<LendABook> getLentBookByIsbn(String isbn) {
         return lendBookDatabase.values().stream().filter(lendABook -> lendABook.getIsbn().equals(isbn)).findFirst();
+    }
+
+    public void deleteLentBook(String lendingId) {
+        lendBookDatabase.remove(lendingId);
     }
 }
