@@ -3,6 +3,8 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.users.members.Member;
+import com.switchfully.digibuggy.users.members.MemberRepository;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,9 @@ class BookControllerIntegrationTest {
 
     @Autowired
     BookMapper mapper;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void givenISBN_whenGetBookIsCalled_thenBookIsReturned() {
@@ -88,8 +93,10 @@ class BookControllerIntegrationTest {
     void givenMembersIDAndBookISBN_WhenLendBook_ThenAddBookToLentBooks() {
         Book thePrisonerOfAzkaban = new Book("123456789132", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla");
         bookRepository.saveBook(thePrisonerOfAzkaban);
-        String memberId = "54654564654";
-        String isbn = "123456789132";
+        Member member = new Member("8787643", "member@mail.test", "some", "member", "some street", "10", "5000", "Namur");
+        memberRepository.registerMember(member);
+        String memberId = member.getId();
+        String isbn = thePrisonerOfAzkaban.getIsbn();
 
         LendABookDto toLend = new LendABookDto(memberId, isbn);
 
