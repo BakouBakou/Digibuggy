@@ -2,6 +2,7 @@ package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
+import com.switchfully.digibuggy.books.dtos.LendABookDto;
 import com.switchfully.digibuggy.books.exceptions.ISBNNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,10 @@ public class BookService {
     public List<BookOverviewDto> getAllBooks() {
         logger.info("getAllBooks method is called");
         return bookMapper.bookOverviewToDto(bookRepository.getAllBooks().values());
+    }
+
+    public void lendBook(LendABookDto lendABookDto) {
+        logger.info("lendBook method is called");
+        bookRepository.lendBook(bookMapper.toLendABook(lendABookDto));
     }
 }

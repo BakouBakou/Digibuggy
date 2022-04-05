@@ -2,14 +2,13 @@ package com.switchfully.digibuggy.books;
 
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
+import com.switchfully.digibuggy.books.dtos.LendABookDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<BookOverviewDto> getAllBooks() {
         return bookService.getAllBooks();
@@ -38,7 +37,11 @@ public class BookController {
         return bookService.getBookByIsbn(isbn);
     }
 
-//    @PutMapping(path = "")
+    @PostMapping(path = "/lend", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void lendBook(@RequestBody LendABookDto lendABookDto) {
+        bookService.lendBook(lendABookDto);
+    }
 }
 
 
