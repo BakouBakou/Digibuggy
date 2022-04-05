@@ -1,4 +1,4 @@
-package com.switchfully.digibuggy.users.librarians;
+package com.switchfully.digibuggy.users.librarians.dtos;
 
 public class RegisterLibrarianDto {
     private final String lastName;

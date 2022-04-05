@@ -1,6 +1,7 @@
 package com.switchfully.digibuggy.users.librarians;
 
-import com.switchfully.digibuggy.users.members.dtos.MemberDto;
+import com.switchfully.digibuggy.users.librarians.dtos.LibrarianDto;
+import com.switchfully.digibuggy.users.librarians.dtos.RegisterLibrarianDto;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

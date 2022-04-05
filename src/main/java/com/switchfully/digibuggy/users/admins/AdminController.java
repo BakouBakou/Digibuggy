@@ -1,7 +1,7 @@
 package com.switchfully.digibuggy.users.admins;
 
-import com.switchfully.digibuggy.users.librarians.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.switchfully.digibuggy.users.librarians.dtos.LibrarianDto;
+import com.switchfully.digibuggy.users.librarians.dtos.RegisterLibrarianDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

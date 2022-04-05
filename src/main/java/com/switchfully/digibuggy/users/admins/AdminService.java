@@ -1,6 +1,8 @@
 package com.switchfully.digibuggy.users.admins;
 
 import com.switchfully.digibuggy.users.librarians.*;
+import com.switchfully.digibuggy.users.librarians.dtos.LibrarianDto;
+import com.switchfully.digibuggy.users.librarians.dtos.RegisterLibrarianDto;
 import org.springframework.stereotype.Service;
 
 @Service
