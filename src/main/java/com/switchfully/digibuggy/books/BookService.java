@@ -30,10 +30,10 @@ public class BookService {
     public BookDto getBookByIsbn(String isbn) {
         logger.info("getBookByIsbn method is called with isbn " + isbn);
         if (bookRepository.getBookByIsbn(isbn) == null) {
-            logger.error(new ISBNNotFoundException().getMessage());
-            throw new ISBNNotFoundException();
+            logger.error(new ISBNNotFoundException(isbn).getMessage());
+            throw new ISBNNotFoundException(isbn);
         }
-        logger.info("returning book");
+        logger.info("returning book with isbn " + isbn);
         return bookMapper.bookToDto(bookRepository.getBookByIsbn(isbn));
     }
 

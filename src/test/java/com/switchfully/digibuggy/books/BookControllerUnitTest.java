@@ -104,7 +104,7 @@ public class BookControllerUnitTest {
         Book thePrisonerOfAzkaban = new Book("123456789132", "The prisoner of Azkaban", "J.K.", "Rowling", "blablabla");
         bookRepository.saveBook(thePrisonerOfAzkaban);
         String memberId = "54654564654";
-        String isbn = "123456789132";
+        String isbn = thePrisonerOfAzkaban.getIsbn();
         LendABookDto toLendBookThatDoesNotExist = new LendABookDto(memberId, isbn);
 
         //THEN

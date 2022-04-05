@@ -96,7 +96,7 @@ class BookControllerIntegrationTest {
         Member member = new Member("8787643", "member@mail.test", "some", "member", "some street", "10", "5000", "Namur");
         memberRepository.registerMember(member);
         String memberId = member.getId();
-        String isbn = "123456789132";
+        String isbn = thePrisonerOfAzkaban.getIsbn();
 
         LendABookDto toLend = new LendABookDto(memberId, isbn);
 
