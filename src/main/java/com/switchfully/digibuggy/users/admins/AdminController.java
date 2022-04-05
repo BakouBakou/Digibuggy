@@ -24,8 +24,8 @@ public class AdminController {
 
     @PostMapping(path = "/librarians", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public LibrarianDto registerLibrarian(@RequestBody RegisterLibrarianDto registerLibrarianDto) {
-
+    public LibrarianDto registerLibrarian(@RequestBody RegisterLibrarianDto registerLibrarianDto, @RequestHeader String authorization) {
+        securityService.validateAuthorization(authorization, Feature.REGISTER_LIBRARIAN);
 
         return adminService.registerLibrarian(registerLibrarianDto);
     }

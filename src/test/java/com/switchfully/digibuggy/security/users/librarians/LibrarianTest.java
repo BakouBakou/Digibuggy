@@ -105,7 +105,7 @@ public class LibrarianTest {
                 .post("/admin/librarians")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.FORBIDDEN.value())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
                 .extract()
                 .response();
     }
