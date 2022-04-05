@@ -5,6 +5,7 @@ import com.switchfully.digibuggy.security.exception.UnknownUserException;
 import com.switchfully.digibuggy.security.exception.WrongPasswordException;
 import com.switchfully.digibuggy.users.admins.Admin;
 import com.switchfully.digibuggy.users.admins.AdminDatabase;
+import com.switchfully.digibuggy.users.admins.AdminRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,12 @@ import java.util.Base64;
 
 @Service
 public class SecurityService {
-    private final AdminDatabase adminDatabase;
 
+    private final AdminRepository adminRepository;
     private final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
-    public SecurityService(AdminDatabase adminDatabase) {
-        this.adminDatabase = adminDatabase;
+    public SecurityService(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
     }
 
     public void validateAuthorization(String authorization, Feature feature) {
@@ -42,7 +43,7 @@ public class SecurityService {
     }
 
     private User getUser(String username) {
-        Admin admin = adminDatabase.get(username);
+        Admin admin = adminRepository.get(username);
 
         if (admin == null)  return null;
 

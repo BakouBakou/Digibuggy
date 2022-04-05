@@ -21,6 +21,8 @@ public class AdminService {
         Librarian librarian = librarianMapper.dtoToLibrarian(registerLibrarianDto);
         Librarian registeredLibrarian = librarianRepository.registerLibrarian(librarian);
 
+        logger.info("Finished registration librarian");
+
         return librarianMapper.librarianToDto(registeredLibrarian);
     }
 }
