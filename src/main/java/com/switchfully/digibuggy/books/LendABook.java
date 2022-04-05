@@ -8,8 +8,6 @@ public class LendABook {
     private final String isbn;
     private final String lendingId;
     private final LocalDate dueDate;
-//    private LocalDate date;
-
 
     public LendABook(String memberId, String isbn) {
         this.memberId = memberId;

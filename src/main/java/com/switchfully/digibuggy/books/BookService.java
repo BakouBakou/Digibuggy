@@ -3,6 +3,7 @@ package com.switchfully.digibuggy.books;
 import com.switchfully.digibuggy.books.dtos.BookDto;
 import com.switchfully.digibuggy.books.dtos.BookOverviewDto;
 import com.switchfully.digibuggy.books.dtos.LendABookDto;
+import com.switchfully.digibuggy.books.exceptions.BookAlreadyLentException;
 import com.switchfully.digibuggy.books.exceptions.BookDoesNotExistException;
 import com.switchfully.digibuggy.books.exceptions.ISBNNotFoundException;
 import com.switchfully.digibuggy.users.members.MemberRepository;
@@ -27,7 +28,7 @@ public class BookService {
     }
 
     public BookDto getBookByIsbn(String isbn) {
-        logger.info("getBookByIsbn method is called");
+        logger.info("getBookByIsbn method is called with isbn " + isbn);
         if (bookRepository.getBookByIsbn(isbn) == null) {
             logger.error(new ISBNNotFoundException().getMessage());
             throw new ISBNNotFoundException();
@@ -42,12 +43,24 @@ public class BookService {
     }
 
     public void lendBook(LendABookDto lendABookDto) {
-        logger.info("lendBook method is called");
+        logger.info("lendBook method is called by member with id " + lendABookDto.getMemberId() + " and with isbn " + lendABookDto.getISBN());
+
         if (memberRepository.getById(lendABookDto.getMemberId()).isEmpty()) {
-            logger.error(new MemberDoesNotExistException().getMessage());
-            throw new MemberDoesNotExistException();
+            logger.error(new MemberDoesNotExistException(lendABookDto.getMemberId()).getMessage());
+            throw new MemberDoesNotExistException(lendABookDto.getMemberId());
         }
-        logger.info("Book is lent");
+
+        if (bookRepository.getBookByIsbn(lendABookDto.getISBN()) == null) {
+            logger.error(new BookDoesNotExistException(lendABookDto.getISBN()).getMessage());
+            throw new BookDoesNotExistException(lendABookDto.getISBN());
+        }
+
+        if (bookRepository.getLentBookByIsbn(lendABookDto.getISBN()).isPresent()) {
+            logger.error(new BookAlreadyLentException(lendABookDto.getISBN()).getMessage());
+            throw new BookAlreadyLentException(lendABookDto.getISBN());
+        }
+
+        logger.info("Book with isbn " + lendABookDto.getISBN() + " is lent by member with id " + lendABookDto.getMemberId());
         bookRepository.lendBook(bookMapper.toLendABook(lendABookDto));
     }
 }

@@ -78,7 +78,9 @@ public class BookControllerUnitTest {
     @Test
     void givenABooksISBNAndMemberId_WhenLendingABookThatDoesNotExistInDatabase_ThenBadRequestIsThrown() {
         //GIVEN
-        String memberId = "54654564654";
+        Member member = new Member("8787643", "member@mail.test", "some", "member", "some street", "10", "5000", "Namur");
+        memberRepository.registerMember(member);
+        String memberId = member.getId();
         String isbn = "123456789132";
         LendABookDto toLendBookThatDoesNotExist = new LendABookDto(memberId, isbn);
 

@@ -17,8 +17,6 @@ public class BookDatabase {
     private final ConcurrentHashMap<String, LendABook> lendBookDatabase = new ConcurrentHashMap<>();
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
 
-//    public BookDatabase() {
-//    }
 
     public Book getBookByIsbn(String isbn) {
         return bookDatabase.get(isbn);
@@ -33,26 +31,10 @@ public class BookDatabase {
     }
 
     public void saveLentBook(LendABook lendABook) {
-
-        Optional<LendABook> lentBooksSameISBN = lendBookDatabase.values().stream()
-                .filter(lentBook -> lentBook.getIsbn().equals(lendABook.getIsbn()))
-                .findFirst();
-
-
-        if(lentBooksSameISBN.isPresent()) {
-            logger.error(new BookAlreadyLentException().getMessage());
-            throw new BookAlreadyLentException();
-        }
-
-        Optional<Book> bookSameISBN = bookDatabase.values().stream()
-                .filter(book -> book.getIsbn().equals(lendABook.getIsbn()))
-                .findFirst();
-
-        if(bookSameISBN.isEmpty()){
-            logger.error(new BookDoesNotExistException().getMessage());
-            throw new BookDoesNotExistException();
-        }
-
         lendBookDatabase.put(lendABook.getLendingId(), lendABook);
+    }
+
+    public Optional<LendABook> getLentBookByIsbn(String isbn) {
+        return lendBookDatabase.values().stream().filter(lendABook -> lendABook.getIsbn().equals(isbn)).findFirst();
     }
 }
